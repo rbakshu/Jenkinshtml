@@ -1,2 +1,21 @@
-<h1>Welcome to Jenkins</h1>
-<h2>Welcome to Jenkins</h2>
+pipeline {
+    agent any
+
+    stages {
+        stage('Fetch code') {
+            steps {
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/rbakshu/Jenkinshtml.git'
+            }
+        }
+        stage('Install websrver') {
+            steps {
+                sh 'sudo apt install apache2 -y'
+            }
+        }
+        stage('deply code') {
+            steps {
+                sh 'cp -R index.html /var/www/html/'
+            }
+        }
+    }
+}
